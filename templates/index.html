@@ -2,15 +2,19 @@
 <html>
 <head>
     <title>Innovation Consultant Chatbot</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
 </head>
 <body>
-    <div id="chat-window">
+    <button id="open-chat">Open Chat</button>
+    <div id="chat-widget" class="closed">
+        <div id="chat-header">
+            <h3>Chatbot</h3>
+            <button id="close-chat">Close</button>
+        </div>
         <div id="chat-output"></div>
         <input type="text" id="user-input" placeholder="Ask a question...">
         <button id="send-button">Send</button>
     </div>
-
-    <script src="script.js"></script>
+    <script src="/static/script.js"></script>
 </body>
 </html>

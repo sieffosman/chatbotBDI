@@ -58,7 +58,7 @@ def chatbot_response(user_input):
     doc = nlp(user_input)
     
     for question, answer in faqs.items():
-        if doc.similarity(nlp(question)) > 0.7:
+        if doc.similarity(nlp(question)) > 0.9:
             return answer
     
     return "I'm sorry, I couldn't understand your question. Please try again."

@@ -31,7 +31,7 @@ const sendUserInput = () => {
     .then(data => {
         const chatOutput = document.getElementById('chat-output');
         chatOutput.innerHTML += `<p>User: ${userQuery}</p>`;
-        chatOutput.innerHTML += `<p>Chatbot: ${data.response}</p>`;
+        chatOutput.innerHTML += `<p>Monty: ${data.response}</p>`;
         document.getElementById('user-input').value = ''; // Clear the input field
     });
 }

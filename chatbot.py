@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')  # Specify the template folder
 
 # Initialize spaCy for NLP processing
 import spacy
@@ -77,3 +77,4 @@ def chat():
 
 if __name__ == "__main__":
     app.run(debug=True)
+

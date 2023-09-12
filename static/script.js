@@ -15,3 +15,26 @@ document.addEventListener('DOMContentLoaded', function () {
         chatWidget.classList.add('closed');
     });
 });
+
+
+const sendUserInput = () => {
+    const userQuery = document.getElementById('user-input').value;
+
+    fetch('/chat', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user_input: userQuery })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const chatOutput = document.getElementById('chat-output');
+        chatOutput.innerHTML += `<p>User: ${userQuery}</p>`;
+        chatOutput.innerHTML += `<p>Chatbot: ${data.response}</p>`;
+        document.getElementById('user-input').value = ''; // Clear the input field
+    });
+}
+
+// Attach the function to the "Send" button's click event
+document.getElementById('send-button').addEventListener('click', sendUserInput);

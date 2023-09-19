@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const openChatButton = document.getElementById('open-chat');
     const closeChatButton = document.getElementById('close-chat');
     const chatWidget = document.getElementById('chat-widget');
+    const sendButton = document.getElementById('send-button');
+    const userInputField = document.getElementById('user-input');
+    const chatOutput = document.getElementById('chat-output');
 
     openChatButton.addEventListener('click', function () {
         chatWidget.style.display = 'block';
@@ -14,27 +17,58 @@ document.addEventListener('DOMContentLoaded', function () {
         chatWidget.classList.remove('open');
         chatWidget.classList.add('closed');
     });
-});
 
-
-const sendUserInput = () => {
-    const userQuery = document.getElementById('user-input').value;
-
-    fetch('/chat', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user_input: userQuery })
-    })
-    .then(response => response.json())
-    .then(data => {
-        const chatOutput = document.getElementById('chat-output');
-        chatOutput.innerHTML += `<p>User: ${userQuery}</p>`;
-        chatOutput.innerHTML += `<p>Monty: ${data.response}</p>`;
-        document.getElementById('user-input').value = ''; // Clear the input field
+    sendButton.addEventListener('click', function () {
+        handleUserInput();
     });
-}
 
-// Attach the function to the "Send" button's click event
-document.getElementById('send-button').addEventListener('click', sendUserInput);
+    // Add an event listener to handle user input when Enter key is pressed
+    userInputField.addEventListener('keyup', function (event) {
+        if (event.key === 'Enter') {
+            handleUserInput();
+        }
+    });
+
+    const sendUserInput = (userQuery) => {
+        fetch('/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ user_input: userQuery })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Simulate typing effect for chatbot response
+            simulateTyping(data.response, chatOutput);
+            userInputField.value = ''; // Clear the input field
+        });
+    }
+    
+
+    // Simulate typing effect
+    function simulateTyping(response, outputElement) {
+        const speed = 50; // Typing speed (adjust as needed)
+        let index = 0;
+
+        function type() {
+            if (index < response.length) {
+                outputElement.innerHTML += response.charAt(index);
+                index++;
+                setTimeout(type, speed);
+            }
+        }
+
+        type();
+    }
+
+    // Handle user input submission
+    function handleUserInput() {
+        const userQuery = userInputField.value;
+        chatOutput.innerHTML += `<p>Monty: ${userQuery}</p>`;
+        simulateTyping("Chatbot response...", chatOutput); // Simulate typing effect for chatbot response
+
+        // You can replace the placeholder text above with the actual chatbot response
+        sendUserInput(userQuery); // Send user input to the server
+    }
+});

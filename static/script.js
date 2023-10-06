@@ -39,6 +39,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
+            console.log(data.response); // Log the response received from the server
+
             // Simulate typing effect for chatbot response
             simulateTyping(data.response, chatOutput);
             userInputField.value = ''; // Clear the input field

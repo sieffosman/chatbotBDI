@@ -9,6 +9,10 @@ nlp = spacy.load("en_core_web_sm")
 
 # Define FAQs and responses
 faqs = {
+    "hello": "Hello, I am MontyBot, how can I help you?",
+    " ": "Hello, I am MontyBot, how can I help you?",
+    "": "Hello, I am MontyBot, how can I help you?",
+
     "What is an innovation consultant?": "An innovation consultant helps businesses identify opportunities for growth and innovation.",
     
     "What services do you offer?": "We offer a range of services, including innovation strategy development, product ideation, and market analysis.",
@@ -58,9 +62,11 @@ def chatbot_response(user_input):
     doc = nlp(user_input)
     
     for question, answer in faqs.items():
-        if doc.similarity(nlp(question)) > 0.9:
+        similarity = doc.similarity(nlp(question))
+        print(f"Similarity for '{question}': {similarity}")
+        if similarity > 0.9:  # Increase the similarity threshold
             return answer
-    
+
     return "I'm sorry, I couldn't understand your question. Please try again."
 
 # Web route for chatbot

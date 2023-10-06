@@ -10,7 +10,9 @@ nlp = spacy.load("en_core_web_sm")
 # Define FAQs and responses
 faqs = {
     "hello": "Hello, I am MontyBot, how can I help you?",
+
     " ": "Hello, I am MontyBot, how can I help you?",
+    
     "": "Hello, I am MontyBot, how can I help you?",
 
     "What is an innovation consultant?": "An innovation consultant helps businesses identify opportunities for growth and innovation.",
